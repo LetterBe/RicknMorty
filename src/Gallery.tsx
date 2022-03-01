@@ -7,15 +7,20 @@ export default function Gallery (){
 
     const [characterName, setCharacterName]=useState("");
     const [items, setItems]= useState([] as Array<Character>)
+    const [errorMessage, setErrorMessage]= useState('')
 
     useEffect (() => {
         fetch ('https://rickandmortyapi.com/api/character')
-            .then (e => e.json())
-            .then ((eBody : Response) => {
-                  setItems(eBody.results);
-
-        });
-    }, [])
+            .then (response => {
+                if(response.status ===200) {
+                    return response.json()
+                }
+                throw new Error("Didn't work, soorry")
+            })
+            .then ((response : Response) => response.results)
+            .then (filteredItems => setItems(filteredItems))
+            .catch((e: Error) => setErrorMessage(e.message))
+    }, []);
 
 
 
@@ -36,6 +41,7 @@ export default function Gallery (){
                     .map(character => <GalleryItem key={character.id} character={character}/> )
                  }
             </div>
+            <div>{errorMessage}</div>
         </div>
     )
 }
