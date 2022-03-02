@@ -6,13 +6,13 @@ import {Character, Response } from "./model";
 export default function Gallery (){
 
     const [characterName, setCharacterName]=useState("");
-    const [items, setItems]= useState([] as Array<Character>)
+    const [items, setItems]= useState([] as Character[])
     const [errorMessage, setErrorMessage]= useState('')
 
     useEffect (() => {
-        fetch ('https://rickandmortyapi.com/api/character')
+        fetch ('https://rickandmortyapi.com/api/character/')
             .then (response => {
-                if(response.status ===200) {
+                if(response.status ===200 || response.status ===304) {
                     return response.json()
                 }
                 throw new Error("Didn't work, soorry")
@@ -23,22 +23,17 @@ export default function Gallery (){
     }, []);
 
 
-
-    /* const [characterName, setCharacterName] = useState('');
-         const items = data
-        .filter(e=> e.name.includes(characterName))
-        .map(value => {
-            return {name: value.name, imageUrl: value.image, status: value.status}})
-        .map(c => < GalleryItem character={c}/>);*/
-
     return (
-        <div id="site-body">
-            <h1> Ricky and Morty</h1>
-                <input type='text' placeholder='Characters name' value={characterName} onChange={e => setCharacterName(e.target.value) }/>
+        <div>
+            <h1 id="title"> Ricky and Morty Gallery</h1>
+                <input type='text' data-testid="searchField" placeholder='Characters name' value={characterName} onChange={e => setCharacterName(e.target.value) }/>
             <div className={'gallery'}>
-                { items
-                    .filter(character => character.name.toLowerCase().includes(characterName.toLowerCase()))
-                    .map(character => <GalleryItem key={character.id} character={character}/> )
+                { items.length>0
+                    ?
+                    items.filter(character => character.name.toLowerCase().includes(characterName.toLowerCase()))
+                    .map(character => <div  data-testid="gallery-item" key={character.id}> <GalleryItem character={character}/> </div>)
+                    :
+                    <h1> loading </h1>
                  }
             </div>
             <div>{errorMessage}</div>

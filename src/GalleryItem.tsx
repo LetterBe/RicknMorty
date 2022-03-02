@@ -1,32 +1,20 @@
-import { Character} from "./model";
+import {Character} from "./model";
 
 interface GalleryItemprops {
-    character : Character
+    character: Character
 
 }
-export default function GalleryItem (props: GalleryItemprops){
-    return(
-        <div className="card">
-            <div className="box">
-                <div className="flip-card">
-                    <div className="flip-card-inner">
-                        <div className="flip-card-front">
-                            <img className="img_card" src={props.character.image} alt="Character" />
-                        </div>
-                        <div className="flip-card-back">
-                            <h1 className="card_name">{props.character.name}</h1>
-            <h1 className={'cardHeader'}>{props.character.name}</h1>
-            <img src={props.character.image} className={'cardPic'}/>
-                <ul>
-                    <li>Name: {props.character.name}</li>
-                    <li>Status:{props.character.status} </li>
-                </ul>
-                       </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-    )
+export default function GalleryItem(props: GalleryItemprops) {
+    return (
+    <div className="flip-card-back">
+        <img data-testid="character-image" src={props.character.image} className={'cardPic'}/>
+        <ul>
+            <li data-testid="character-name">Name: {props.character.name}</li>
+            <li data-testid="character-status">Status:{props.character.status} </li>
+        </ul>
+    </div>
+
+)
 }
 
