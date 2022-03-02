@@ -1,4 +1,5 @@
 import {Character} from "./model";
+import React from "react";
 
 interface GalleryItemprops {
     character: Character

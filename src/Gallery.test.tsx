@@ -1,5 +1,5 @@
 import './Gallery'
-import {render, screen, getAllByTestId, waitFor, fireEvent} from "@testing-library/react";
+import {render, screen, waitFor, fireEvent} from "@testing-library/react";
 import Gallery from "./Gallery";
 
 test('that response is handled ', async () => {
@@ -28,20 +28,17 @@ test('that response is handled ', async () => {
         } as Response);
     });
 
+    render(<Gallery/>);
 
+    await waitFor(() => {
+        expect(screen.getAllByTestId('gallery-item').length).toBe(3);
+    });
 
+    const searchField = screen.getByTestId("searchField") as HTMLInputElement;
 
-render(<Gallery/>);
+    fireEvent.change(searchField, {target: {value: 'r'}});
 
-await waitFor(() => {
-    expect(screen.getAllByTestId('gallery-item').length).toBe(3);
-});
-
-const searchField = screen.getByTestId("searchField") as HTMLInputElement;
-
-fireEvent.change(searchField, {target: {value: 'r'}});
-
-await waitFor(() => {
-    expect(screen.getAllByTestId('gallery-item').length).toBe(2);
+    await waitFor(() => {
+        expect(screen.getAllByTestId('gallery-item').length).toBe(2);
     });
 });
