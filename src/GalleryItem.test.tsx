@@ -1,6 +1,7 @@
 import './GalleryItem'
 import {render} from "@testing-library/react";
 import GalleryItem from "./GalleryItem";
+import React from "react";
 
 test('that compenent is rendered correctly', () => {
     // given

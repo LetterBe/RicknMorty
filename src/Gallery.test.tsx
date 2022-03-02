@@ -1,6 +1,7 @@
 import './Gallery'
 import {render, screen, waitFor, fireEvent} from "@testing-library/react";
 import Gallery from "./Gallery";
+import React from "react";
 
 test('that response is handled ', async () => {
     jest.spyOn(global, 'fetch').mockImplementation(() => {
